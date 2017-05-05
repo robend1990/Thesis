@@ -1,0 +1,17 @@
+{
+  "name": "js",
+  "version": "0.0.0",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-material-icons": "~0.4.0",
+    "angular-material": "~0.8.3",
+    "moment": "~2.10.3"
+  }
+}

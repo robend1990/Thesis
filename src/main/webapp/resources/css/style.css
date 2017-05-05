@@ -1,0 +1,23 @@
+body{
+	padding-top: 70px;
+	padding-left:50px;
+	padding-right:50px
+}
+
+.element {
+  position: relative !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+
+#parent {position: relative;}
+
+#child {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 30%;
+    width: 50%;
+    margin: -15% 0 0 -25%;
+}
+

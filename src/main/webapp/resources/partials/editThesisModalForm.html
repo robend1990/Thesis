@@ -1,0 +1,33 @@
+
+ <div class="modal-header">
+            <h3 class="modal-title">Praca dyplomowa</h3>
+        </div>
+        <div class="modal-body">
+        	<form>
+            	<div class="form-group">
+            		<label for="name">Tytuł</label>
+            		<input name="name" ng-model="thesis.title" class="form-control" placeholder="Tytuł"/>
+            	</div>
+            	
+            	
+            	<div class="form-group">
+            		
+            		<label for="description">Opis</label>
+            		<textarea ng-model="thesis.description" style="width: 569px; height: 130px;" class="form-control" rows="3" id="description"></textarea>
+            	</div>
+            	
+            	<div class="form-group">
+            		
+            		<label>Kierunek</label>
+            		<select class="form-control" ng-model="thesis.specialization" ng-options="specialization as specialization.name + ' | ' + specialization.process + ' | ' + specialization.degree for specialization in specializations">
+            			
+            		</select>
+            	</div>
+            	
+          	</form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+       </div>
+       

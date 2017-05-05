@@ -1,0 +1,23 @@
+<div class="modal-header">
+	<h2>Rezerwacja tematu</h2>
+</div>
+
+<div class="modal-body">
+	<div>
+		<label for="albumNumber">Numer albumu</label>
+		<input type="number" min="1" max="99999" name="albumNumber" ng-model="albumNumber" placeholder="Numer albumu"/>
+	</div>
+	<div>
+		<p ng-show="userCheckingError">{{userCheckingError}}</p>
+	</div>
+	<div>
+		<p ng-show="userInfo">{{userInfo}}</p>
+	</div>
+</div>
+
+<div class="modal-footer">
+	
+	<button class="btn btn-primary" ng-click="checkForUser()" >Wyszukaj</button>
+	<button class="btn btn-primary" ng-click="doReservation()" ng-disabled="(!userCheckingError && !userInfo) || userCheckingError">Rezerwuj</button>
+	<button class="btn btn-default" ng-click="cancel()">Anuluj</button>
+</div>

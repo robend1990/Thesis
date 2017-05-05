@@ -1,0 +1,55 @@
+
+ <div class="modal-header">
+            <h3 class="modal-title">Nowy/Edytuj użytkownik</h3>
+        </div>
+        <div class="modal-body">
+        	<form>
+            	<div class="form-group">
+            		<label for="fistname">Imię</label>
+            		<input name="firstname" ng-model="user.firstname" class="form-control" placeholder="Imię"/>
+            	</div>
+            	<div class="form-group">
+            		<label for="lastname">Nazwisko</label>
+            		<input name="lastname" ng-model="user.lastname" class="form-control" placeholder="Nazwisko"/>
+            	</div>
+            	<div class="form-group">
+            		<label for="pesel">Pesel</label>
+            		<input name="pesel" ng-model="user.pesel" class="form-control" placeholder="Pesel"/>
+            	</div>
+            	<div class="form-group">
+            		<label for="email">Email</label>
+            		<input name="email"  ng-model="user.email" class="form-control" placeholder="Email"/>
+            	</div>
+            	<div class="form-group" ng-show="!user.id">
+            		<label for="password">Hasło</label>
+            		<input name="password" type="password" ng-model="user.password" class="form-control" placeholder="Hasło"/>
+            	</div>
+            	
+            	<div class="form-group" ng-show="user.role.name== 'STUDENT' ">
+            		<label for="albumNumber">Nr albumu</label>
+            		<input name="albumNumber"  ng-model="user.albumNumber" class="form-control" placeholder="Nr albumu"/>
+            	</div>
+            	
+            	<div class="form-group" ng-show="user.role.name== 'STUDENT' ">
+            		
+            		<label>Kierunek</label>
+            		<select class="form-control" ng-model="user.specialization" ng-options="specialization as specialization.name + ' | ' + specialization.process + ' | ' + specialization.degree for specialization in specializations">
+            			
+            		</select>
+            	</div>
+            	
+            	<div class="form-group">
+            		
+            		<label>Rola</label>
+            		<select class="form-control" ng-model="user.role" ng-options="role as role.name for role in roles">
+            			
+            		</select>
+            	</div>
+            	
+          	</form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+       </div>
+       

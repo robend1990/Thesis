@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html ng-app="App">
+<head>
+<meta charset="UTF-8">
+
+  <link rel="stylesheet" href="resources/js/bower_components/angularjs-toaster/toaster.min.css"/>
+  <link rel="stylesheet" href="resources/js/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="resources/css/style.css"/>
+
+<title>Insert title here</title>
+
+<script type="text/ng-template" id="myPopoverTemplate.html">
+        <div style="width: 400px">
+        	<div class="form-group col-sm-7">
+         	 <label>Hasło:</label>
+         	 <input type="password" ng-model="passwords.oldPassword" ng-change="checkOldPassword()"  class="form-control">
+			 <span ng-show="validOldPassword === false"  style="color:red">Nieprawidłowe hasło <i class="glyphicon glyphicon-remove"></i></br></span>
+			 <span ng-show="validOldPassword === true"  style="color:green">Prawidłowe hasło <i class="glyphicon glyphicon-ok"></i></br></span>			
+ 			 <label>Nowe hasło:</label>
+         	 <input type="password" ng-model="passwords.newPassword" class="form-control">
+			 <label>Powtórz nowe hasło:</label>
+         	 <input type="password" ng-model="passwords.newPasswordRepeat" ng-change="checkPasswordsEquality()" class="form-control">
+			 <span ng-show="arePasswordsEquals === false"  style="color:red">Podane hasła są różne <i class="glyphicon glyphicon-remove"></i></br></span>
+			 <span ng-show="arePasswordsEquals === true"  style="color:green">Podane hasła są prawidłowe <i class="glyphicon glyphicon-ok"></i></br></span>
+			<button class="btn btn-primary" ng-click="changePassword()" ng-disabled="!validOldPassword || !arePasswordsEquals" style="margin-top: 5px"><span class="glyphicon glyphicon-ok"> </span> Zmień</button>
+			
+
+       		</div>
+		</div>
+</script>
+</head>
+<body ng-controller = "IndexController">
+
+<div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="#home" class="navbar-brand"><i class="glyphicon glyphicon-home"></i> </a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav">
+             <li ng-show="loggedUser.role.name == 'ADMIN' ">
+              <a href="#userList"><i class="glyphicon glyphicon-user">  </i> Użytkownicy</a>
+            </li>
+            <li ng-show="loggedUser.role.name== 'ADMIN' ">
+              <a href="#specializationList"><i class="glyphicon glyphicon-education">  </i> Kierunki</a>
+            </li>
+            <li>
+              <a href="#thesisList"><i class="glyphicon glyphicon-book">  </i> Tematy prac</a>
+            </li>
+            <li ng-show="loggedUser.role.name== 'STUDENT' ">
+              <a href="#myThesis"><i class="glyphicon glyphicon-file">  </i> Mój temat</a>
+            </li>
+            
+            <!--  <li dropdown class="dropdown">
+              <a aria-expanded="false" class="dropdown-toggle" dropdown-toggle role="button" href="#" id="download">Download <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu" >
+                <li><a href="./bootstrap.min.css">bootstrap.min.css</a></li>
+                <li><a href="./bootstrap.css">bootstrap.css</a></li>
+                <li class="divider"></li>
+                <li><a href="./variables.less">variables.less</a></li>
+                <li><a href="./bootswatch.less">bootswatch.less</a></li>
+                <li class="divider"></li>
+                <li><a href="./_variables.scss">_variables.scss</a></li>
+                <li><a href="./_bootswatch.scss">_bootswatch.scss</a></li>
+              </ul>
+            </li>
+            <li class="dropdown" dropdown >
+               <a href="#" class="dropdown-toggle" dropdown-toggle role="button" aria-expanded="false">More <span class="caret"></span></a>
+                            <ul class="dropdown-menu dropdown-menu-left" role="menu">
+                                <li><a href="#">Edit Event</a></li>
+                                <li><a href="#">Withdraw Funds</a></li>
+                            </ul>
+                        </li>-->
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+          <li>
+	    		<a id="passwordPopover" href="" ng-click="resetPasswords()" popover-placement="bottom" popover-template="dynamicPopover.templateUrl" popover-title="{{dynamicPopover.title}}" ><i class="glyphicon glyphicon-lock">  </i> Zmień hasło</a>
+            </li>
+            <li><a href="../thesis/logout"> <i class="glyphicon glyphicon-log-out"> </i> Wyloguj</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+
+   <!--   <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+	
+   
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Link</a></li>
+        <li><a href="#"><ng-md-icon size="40" icon="account_box"></a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li class="divider"></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>
+        
+      </ul>
+      
+        
+      
+      
+     
+    </div> -->
+  </div>
+</nav> 
+
+
+<toaster-container></toaster-container>
+
+<div ng-view class="container-fluid">
+    <!-- 
+    <span class="dropdown" dropdown on-toggle="toggled(open)">
+      <a href class="dropdown-toggle" dropdown-toggle>
+        Click me for a dropdown, yo!
+      </a>
+      <ul class="dropdown-menu">
+        <li ng-repeat="choice in items">
+          <a href>{{choice}}</a>
+        </li>
+      </ul>
+    </span>
+
+    <!--
+    <div class="btn-group" dropdown is-open="status.isopen">
+      <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+        Button dropdown <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="#">Action</a></li>
+        <li><a href="#">Another action</a></li>
+        <li><a href="#">Something else here</a></li>
+        <li class="divider"></li>
+        <li><a href="#">Separated link</a></li>
+      </ul>
+    </div>
+
+    
+    <div class="btn-group" dropdown>
+      <button type="button" class="btn btn-danger">Action</button>
+      <button type="button" class="btn btn-danger dropdown-toggle" dropdown-toggle>
+        <span class="caret"></span>
+        <span class="sr-only">Split button!</span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="#">Action</a></li>
+        <li><a href="#">Another action</a></li>
+        <li><a href="#">Something else here</a></li>
+        <li class="divider"></li>
+        <li><a href="#">Separated link</a></li>
+      </ul>
+    </div>
+
+     
+    <div class="btn-group" dropdown dropdown-append-to-body>
+      <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
+        Dropdown on Body <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="#">Action</a></li>
+        <li><a href="#">Another action</a></li>
+        <li><a href="#">Something else here</a></li>
+        <li class="divider"></li>
+        <li><a href="#">Separated link</a></li>
+      </ul> 
+    </div>
+
+    <hr />
+    <p>
+        <button type="button" class="btn btn-default btn-sm" ng-click="toggleDropdown($event)">Toggle button dropdown</button>
+        <button type="button" class="btn btn-warning btn-sm" ng-click="disabled = !disabled">Enable/Disable</button>
+    </p>
+  -->
+</div>  
+
+
+
+
+<script type="text/javascript" src="resources/js/bower_components/angular/angular.js"></script>
+<script type="text/javascript" src="resources/js/bower_components/angular-animate/angular-animate.js"></script>
+<script type="text/javascript" src="resources/js/bower_components/angular-route/angular-route.min.js"></script>
+<script type="text/javascript" src="resources/js/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script type="text/javascript" src="resources/js/bower_components/ngstorage/ngStorage.min.js"></script>
+<script type="text/javascript" src="resources/js/bower_components/angularjs-toaster/toaster.min.js"></script>
+<script type="text/javascript" src="resources/js/underscore.js"></script>
+<script type="text/javascript" src="resources/js/bower_components/moment/min/moment.min.js"></script>
+
+
+<script type="text/javascript" src="resources/js/App.js"></script>
+
+<script type="text/javascript" src="resources/js/services/DialogsService.js"></script>
+<script type="text/javascript" src="resources/js/services/ToastService.js"></script>
+<script type="text/javascript" src="resources/js/services/SpecializationService.js"></script>
+<script type="text/javascript" src="resources/js/services/UserService.js"></script>
+<script type="text/javascript" src="resources/js/services/ThesisService.js"></script>
+
+
+
+<script type="text/javascript" src="resources/js/controllers/test.js"></script>
+<script type="text/javascript" src="resources/js/controllers/IndexController.js"></script>
+<script type="text/javascript" src="resources/js/controllers/UserController.js"></script>
+<script type="text/javascript" src="resources/js/controllers/ThesisController.js"></script>
+<script type="text/javascript" src="resources/js/controllers/SpecializationController.js"></script>
+<script type="text/javascript" src="resources/js/controllers/SpecializationModalController.js"></script>
+<script type="text/javascript" src="resources/js/controllers/ConfirmModalController.js"></script>
+<script type="text/javascript" src="resources/js/controllers/ThesisModalController.js"></script>
+<script type="text/javascript" src="resources/js/controllers/MyThesisController.js"></script>
+</body>
+</html>

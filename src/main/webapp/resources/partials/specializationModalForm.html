@@ -1,0 +1,37 @@
+
+ <div class="modal-header">
+            <h3 class="modal-title">Specjalizacja</h3>
+        </div>
+        <div class="modal-body">
+        	<form>
+            	<div class="form-group">
+            		<label for="name">Nazwa</label>
+            		<input name="name" ng-model="specialization.name" class="form-control" placeholder="Nazwa"/>
+            	</div>
+            	
+            	
+            	<div class="form-group">
+            		
+            		<label>Stopień</label>
+            		<select class="form-control" ng-model="specialization.degree">
+            			<option  value="Inż">Inż</option>
+            			<option  value="Mgr">Mgr</option>
+            		</select>
+            	</div>
+            	
+            	<div class="form-group">
+            		
+            		<label>Tryb</label>
+            		<select class="form-control"  ng-model="specialization.process">
+            			<option value="Dzienne">Dzienne</option>
+            			<option value="Zaoczne">Zaoczne</option>
+            		</select>
+            	</div>
+            	
+          	</form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+       </div>
+       

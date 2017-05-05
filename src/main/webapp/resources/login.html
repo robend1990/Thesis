@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app="App">
+<head>
+<meta charset="UTF-8">
+  <link rel="stylesheet" href="js/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+<title>Insert title here</title>
+</head>
+<body ng-controller="LoginController">
+
+
+	<div style="margin: 200px; padding-left: 200px; padding-right:200px; vertical-align: center">
+		<div class="alert alert-dismissible alert-danger" ng-show="error">
+  			<button type="button" class="close" ng-click="error = false" data-dismiss="alert">×</button>
+  			<strong>Nieprawidłowy użytkownik lub hasło </strong>
+		</div>
+		<form ng-submit="login();">
+			<legend>Logowanie</legend>
+			<div class="form-group">
+				<label for="inputEmail" class="col-lg-2 control-label">Użytkownik</label>
+				<div class="col-lg-10">
+					<input class="form-control" ng-model="credentials.username" id="inputName" placeholder="Użytkownik"
+						name=username type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputPassword" class="col-lg-2 control-label">Hasło</label>
+				<div class="col-lg-10">
+					<input class="form-control" id="inputPassword" ng-model="credentials.password" name="password"
+						placeholder="Hasło" type="password">
+				</div>
+			</div>
+			<div>
+				<button class="btn  btn-primary"  type="submit" ><span class="glyphicon glyphicon-log-in"> </span> Zaloguj</button>	
+			</div>
+		</form>
+	</div>
+
+
+
+
+	<script type="text/javascript" src="js/bower_components/angular/angular.js"></script>
+	<script type="text/javascript" src="js/bower_components/angular-animate/angular-animate.js"></script>
+	<script type="text/javascript" src="js/bower_components/angular-route/angular-route.min.js"></script>
+	<script type="text/javascript" src="js/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+	<script type="text/javascript" src="js/bower_components/ngstorage/ngStorage.min.js"></script>
+	<script type="text/javascript" src="js/bower_components/angularjs-toaster/toaster.min.js"></script>
+	<script type="text/javascript" src="js/App.js"></script> 
+	
+	<script type="text/javascript" src="js/services/UserService.js"></script>
+	
+	<script type="text/javascript" src="js/controllers/IndexController.js"></script>
+	<script type="text/javascript" src="js/controllers/LoginController.js"></script>
+
+
+</body>
+</html>
